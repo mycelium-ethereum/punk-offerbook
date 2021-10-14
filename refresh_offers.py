@@ -7,9 +7,7 @@ monkey.patch_all();
 
 import sys
 import settings
-from utils.log import *
-from utils.types import *
-from client import mongo, webhook
+from utils import *
 
 def get_web3_offers() -> List[Offer]:
     global cryptopunks
@@ -32,10 +30,9 @@ def update_offers(first_run: bool = False):
         if db_offer is None:
             mongo.insert_offer(api_offer.db_parse())
         else:
-            earliest_offer = api_offer if api_offer.ts > db_offer.ts else db_offer
-            if not api_offer.is_equal_to(earliest_offer):
-                webhook.send(f"Updating offer for PUNK {punk_id} from rest program")
-                mongo.update_offer(earliest_offer.db_parse())
+            if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
+                alert(f"Updating offer for PUNK {punk_id} from rest program")
+                mongo.update_offer(api_offer.db_parse())
 
 if __name__ == "__main__":
     logger = setup_custom_logger('root')

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import sys
 import time
 import logging
 import settings
@@ -11,17 +12,19 @@ from client import web3, abis, webhook, mongo
 class Streaming:
     def __init__(self):
         self.logger = logging.getLogger(settings.LOGGER_NAME)
-
-    def default_handler(self, event: dict):
-        self.logger.info(f"From default handler - {event}")
+        self.errored = False
 
     def log_loop(self, event_handler: Callable, poll_interval: float = 1):
         while True:
-            for event in self.event_filter.get_new_entries():
-                event_handler(event)
+            try:
+                for event in self.event_filter.get_new_entries():
+                    event_handler(event)
+            except Exception as e:
+                self.logger.error(e)
+                self.errored = True
             time.sleep(poll_interval)
 
-    def start_streaming(self, event: str, event_handler: Callable = default_handler, **kwargs):
+    def start_streaming(self, event: str, event_handler: Callable, **kwargs):
         self.logger.info(f"Opened stream for {event}")
         self.event_filter = self.contract.events[event].createFilter(fromBlock='latest', argument_filters=kwargs)
         thread = Thread(target=self.log_loop, args=[event_handler])
@@ -71,7 +74,7 @@ class Offer:
     def is_valid_offer(self) -> bool:
         return self.is_for_sale and self.is_not_private_sale()
 
-    def is_equal_to(self, offer: Offer):
+    def equals(self, offer: Offer):
         return (
             self.is_for_sale == offer.is_for_sale and
             self.punk_index == offer.punk_index and 
@@ -98,42 +101,3 @@ class Cryptopunks(Streaming):
         except Exception as e:
             print(e)
             return None
-
-    def update_handler(self, event: dict):
-        event = dict(event)
-        punk_index = event['args']['punkIndex']
-        db_offer = parse_db_offer(mongo.get_offer(punk_index))
-        latest_offer = self.get_offer(punk_index)
-
-def parse_offers_to_db(offers: List[Offer]) -> List[Dict]:
-    return [offer.db_parse() for offer in offers]
-
-def get_invalid_ids_string(offers: List[Offer]) -> List[int]:
-    msg = ""
-    invalid_offer_ids = [offer.punk_index for offer in offers if not offer.is_valid]
-    for _id in invalid_offer_ids:
-        msg += f"token_ids={_id}&"
-    return msg[:-1]
-
-def parse_opensea_offers(offers: List[Dict]) -> List[Offer]:
-    return offers
-
-def parse_db_offer(offer: Dict) -> Offer:
-    _offer = Offer(
-        is_for_sale = offer['is_for_sale'],
-        punk_index = offer['punk_index'],
-        seller = offer['seller'],
-        min_value = offer['min_value'],
-        only_sell_to = offer['only_sell_to'],
-    )
-    _offer.set_ts(offer['ts'])
-    return _offer
-
-def parse_db_offers(offers: List[Dict]) -> List[Offer]:
-    return [parse_db_offer(offer) for offer in offers]
-
-def get_offer_for(punk_index: int, offers: List[Offer]) -> Offer:
-    try:
-        return next(offer for offer in offers if offer.punk_index == punk_index)
-    except StopIteration:
-        return None
