@@ -28,7 +28,7 @@ class Streaming:
     def start_streaming(self, event: str, event_handler: Callable, **kwargs):
         self.logger.info(f"Opened stream for {event}")
         self.event_filter = self.contract.events[event].createFilter(fromBlock='latest', argument_filters=kwargs)
-        thread = Thread(target=self.log_loop, args=[event_handler])
+        thread = Thread(target=self.log_loop, args=[event_handler], daemon=True)
         thread.start()
 
 class Address:

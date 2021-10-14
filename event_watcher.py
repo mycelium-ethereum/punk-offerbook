@@ -25,3 +25,4 @@ if __name__ == "__main__":
     while not cryptopunks.errored: time.sleep(1)
 
     alert(f"Quitting event watcher because of error - {cryptopunks.error}")
+    sys.exit(1)
