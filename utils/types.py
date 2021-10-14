@@ -22,6 +22,7 @@ class Streaming:
             except Exception as e:
                 self.logger.error(e)
                 self.errored = True
+                self.error = e
             time.sleep(poll_interval)
 
     def start_streaming(self, event: str, event_handler: Callable, **kwargs):

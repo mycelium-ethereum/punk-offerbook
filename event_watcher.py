@@ -3,8 +3,6 @@ import settings
 from utils import *
 from client import mongo, webhook
 
-logger = setup_custom_logger('root')
-setup_file_logger('event', logger)
 
 def update_handler(event: dict):
     global cryptopunks
@@ -16,8 +14,14 @@ def update_handler(event: dict):
     if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
         mongo.update_offer(api_offer.db_parse())
 
-cryptopunks = Cryptopunks()
-for event in settings.CRYPTO_PUNKS_EVENTS:
-    cryptopunks.start_streaming(event, event_handler=update_handler)
+if __name__ == "__main__":
+    logger = setup_custom_logger('root')
+    setup_file_logger('event', logger)
 
-while not cryptopunks.errored: time.sleep(1)
+    cryptopunks = Cryptopunks()
+    for event in settings.CRYPTO_PUNKS_EVENTS:
+        cryptopunks.start_streaming(event, event_handler=update_handler)
+
+    while not cryptopunks.errored: time.sleep(1)
+
+    alert(f"Quitting event watcher because of error - {cryptopunks.error}")

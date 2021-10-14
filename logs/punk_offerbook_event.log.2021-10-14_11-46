@@ -1,0 +1,7 @@
+2021-10-14 11:40:49,889 - INFO - Mongo - Getting all offers...
+2021-10-14 11:46:12,886 - INFO - types - Opened stream for PunkTransfer
+2021-10-14 11:46:13,932 - INFO - types - Opened stream for PunkOffered
+2021-10-14 11:46:14,921 - INFO - types - Opened stream for PunkBidEntered
+2021-10-14 11:46:15,198 - INFO - types - Opened stream for PunkBidWithdrawn
+2021-10-14 11:46:15,505 - INFO - types - Opened stream for PunkBought
+2021-10-14 11:46:15,776 - INFO - types - Opened stream for PunkNoLongerForSale
