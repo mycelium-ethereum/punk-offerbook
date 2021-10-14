@@ -37,6 +37,7 @@ def update_offers(first_run: bool = False):
 if __name__ == "__main__":
     logger = setup_custom_logger('root')
     setup_file_logger('refresh', logger)
+    start_time = time.time()
 
     try: 
         first_run = sys.argv[1]
@@ -46,3 +47,4 @@ if __name__ == "__main__":
 
     cryptopunks = Cryptopunks()
     update_offers(first_run)
+    alert(f"Refresh offers completed in {int(time.time() - start_time)}s")
