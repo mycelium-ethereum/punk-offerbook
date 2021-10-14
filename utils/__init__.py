@@ -20,7 +20,7 @@ def parse_db_offer(offer: Dict) -> Offer:
         is_for_sale = offer['is_for_sale'],
         punk_index = offer['punk_index'],
         seller = offer['seller'],
-        min_value = offer['min_value'],
+        min_value = int(offer['min_value']),
         only_sell_to = offer['only_sell_to'],
     )
     _offer.set_ts(offer['ts'])

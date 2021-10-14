@@ -12,6 +12,7 @@ numpy = "*"
 python-dotenv = "*"
 pymongo = {extras = ["srv"], version = "*"}
 discord = "*"
+fastapi = {extras = ["all"], version = "*"}
 
 [dev-packages]
 
