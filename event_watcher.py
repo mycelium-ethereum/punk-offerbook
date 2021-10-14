@@ -12,6 +12,7 @@ def update_handler(event: dict):
     db_offer = parse_db_offer(mongo.get_offer(punk_index))
     api_offer = cryptopunks.get_offer(punk_index)
     if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
+        alert(f"Updating offer for PUNK {punk_index}")
         mongo.update_offer(api_offer.db_parse())
 
 if __name__ == "__main__":
