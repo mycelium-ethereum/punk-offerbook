@@ -10,5 +10,5 @@ async def root(x: int):
         cryptopunks_offers = parse_db_offers(mongo.get_all_offers())
         cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
         cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
-        return cryptopunks_offers[x]
+        return cryptopunks_offers[x-1]
     return {'error': 'Minimum x value is 1'}
