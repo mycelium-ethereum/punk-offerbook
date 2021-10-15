@@ -4,10 +4,11 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/floor")
-async def root():
-    cryptopunks_offers = parse_db_offers(mongo.get_all_offers())
-    cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
-    cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
-    # floor_price = np.median([offer.min_value for offer in cryptopunks_offers[:4]])
-    return cryptopunks_offers[0]
+@app.get("/punkfloor")
+async def root(x: int):
+    if x >= 1:
+        cryptopunks_offers = parse_db_offers(mongo.get_all_offers())
+        cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
+        cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
+        return cryptopunks_offers[x]
+    return {'error': 'Minimum x value is 1'}
