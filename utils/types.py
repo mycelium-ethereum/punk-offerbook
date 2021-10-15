@@ -7,6 +7,7 @@ from threading import Thread
 from datetime import datetime
 from dataclasses import dataclass
 from typing import List, Callable, Dict
+from web3._utils.filters import LogFilter
 from client import web3, abis, webhook, mongo
 
 class Streaming:
@@ -14,10 +15,10 @@ class Streaming:
         self.logger = logging.getLogger(settings.LOGGER_NAME)
         self.errored = False
 
-    def log_loop(self, event_handler: Callable, poll_interval: float = 1):
+    def log_loop(self, event_filter: LogFilter, event_handler: Callable, poll_interval: float = 1):
         while True:
             try:
-                for event in self.event_filter.get_new_entries():
+                for event in event_filter.get_new_entries():
                     event_handler(event)
             except Exception as e:
                 self.logger.error(e)
@@ -27,8 +28,8 @@ class Streaming:
 
     def start_streaming(self, event: str, event_handler: Callable, **kwargs):
         self.logger.info(f"Opened stream for {event}")
-        self.event_filter = self.contract.events[event].createFilter(fromBlock='latest', argument_filters=kwargs)
-        thread = Thread(target=self.log_loop, args=[event_handler], daemon=True)
+        event_filter = self.contract.events[event].createFilter(fromBlock='latest', argument_filters=kwargs)
+        thread = Thread(target=self.log_loop, args=[event_filter, event_handler], daemon=True)
         thread.start()
 
 class Address:
