@@ -1,4 +1,5 @@
 from client import webhook
 
 def alert(msg: str):
-    webhook.send(msg)
+    if webhook is not None:
+        webhook.send(msg)

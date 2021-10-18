@@ -3,10 +3,8 @@ import settings
 from utils import *
 from client import mongo, webhook
 
-
 def update_handler(event: dict):
     global cryptopunks
-    alert(f"Event from event_watcher: {event}")
     event = dict(event)
     punk_index = event['args']['punkIndex']
     db_offer = parse_db_offer(mongo.get_offer(punk_index))

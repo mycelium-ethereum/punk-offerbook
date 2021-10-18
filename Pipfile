@@ -13,6 +13,7 @@ python-dotenv = "*"
 pymongo = {extras = ["srv"], version = "*"}
 discord = "*"
 fastapi = {extras = ["all"], version = "*"}
+psycopg2 = "*"
 
 [dev-packages]
 
