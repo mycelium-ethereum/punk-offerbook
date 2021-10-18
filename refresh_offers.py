@@ -35,6 +35,7 @@ def update_offers(first_run: bool = False):
                 mongo.update_offer(api_offer.db_parse())
 
 if __name__ == "__main__":
+    alert('Starting refresh offers now.')
     logger = setup_custom_logger('root')
     setup_file_logger('refresh', logger)
     start_time = time.time()

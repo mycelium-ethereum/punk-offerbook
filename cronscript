@@ -1,2 +1,3 @@
-*/55 * * * * /home/ec2-user/punk-offerbook/refresh_master.sh
-* * * * * /usr/bin/flock -n /tmp/punk_offerbook.lockfile /home/ec2-user/punk-offerbook/event_master.sh
+*/55 * * * * /home/<username>/punk-offerbook/refresh_master.sh
+* * * * * /usr/bin/flock -n /tmp/punk_offerbook_event.lockfile /home/<username>/punk-offerbook/event_master.sh
+* * * * * /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile /home/<username>/punk-offerbook/start_server.sh
