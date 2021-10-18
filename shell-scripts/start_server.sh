@@ -1,2 +1,2 @@
 cd punk-offerbook
-uvicorn floor_price:app --host 0.0.0.0 --port 3400
+python3 -m uvicorn floor_price:app --host 0.0.0.0 --port 3400
