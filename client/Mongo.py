@@ -8,7 +8,6 @@ class Mongo():
     def __init__(self):
         self.logger = logging.getLogger('root')
         self.client = MongoClient(os.environ.get("MONGO_URL"), ssl=True, ssl_cert_reqs=ssl.CERT_NONE, readPreference='nearest')
-        self.cryptopunks_prices = self.client.nft_floor_prices_server.cryptopunks
         self.cryptopunks_offerbook  = self.client.nft_offer_books.cryptopunks
 
     def get_all_offers(self) -> List[Dict]:
