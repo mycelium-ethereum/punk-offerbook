@@ -29,8 +29,8 @@ Replace < username > with your server username.
 # Data preparation
 ```
 cd
-./punk-offerbook/event_master.sh &
-./punk-offerbook/refresh_master.sh
+./punk-offerbook/shell-scripts/event_master.sh &
+./punk-offerbook/shell-scripts/refresh_master.sh
 ```
 
 # Starting the server
