@@ -21,9 +21,9 @@ DISCORD_WEBHOOK = "XXX"
 
 Replace < username > with your server username.
 ```
-*/55 * * * * /home/<username>/punk-offerbook/refresh_master.sh
-* * * * * /usr/bin/flock -n /tmp/punk_offerbook_events.lockfile /home/<username>/punk-offerbook/event_master.sh
-* * * * * /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile /home/<username>/punk-offerbook/start_server.sh
+*/55 * * * * /home/<username>/punk-offerbook/shell-scripts/refresh_master.sh
+* * * * * /usr/bin/flock -n /tmp/punk_offerbook_events.lockfile /home/<username>/punk-offerbook/shell-scripts/event_master.sh
+* * * * * /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile /home/<username>/punk-offerbook/shell-scripts/start_server.sh
 ```
 
 # Data preparation
