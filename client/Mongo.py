@@ -17,9 +17,9 @@ class Mongo():
 
     def get_transactions(self, timedelta: timedelta) -> List[Dict]:
         self.logger.info("Getting transactions...")
-        return self.cryptopunks_transactions.find({
+        return list(self.cryptopunks_transactions.find({
             'ts': {'$gte': datetime.utcnow() - timedelta}
-        })
+        }))
 
     def get_all_offers(self) -> List[Dict]:
         self.logger.info("Getting all offers...")
