@@ -23,6 +23,7 @@ def bought_handler(event: dict):
         'value': str(cryptopunks.get_tx_price(event['transactionHash'].hex()))
     }
     if not mongo.transaction_present(tx_data['hash']):
+        alert("Storing transaction...")
         mongo.cryptopunks_transactions.insert_one(tx_data)
 
 if __name__ == "__main__":
