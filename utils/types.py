@@ -103,3 +103,16 @@ class Cryptopunks(Streaming):
         except Exception as e:
             print(e)
             return None
+
+    def get_tx_price(self, tx_hash: str) -> int:
+        try:
+            tx = web3.eth.get_transaction(tx_hash)
+            func, params = self.contract.decode_function_input(tx['input'])
+            if str(func) == "<Function acceptBidForPunk(uint256,uint256)>":
+                return params['minPrice']
+            elif str(func) == "<Function buyPunk(uint256)>":
+                return tx['value']
+            else:
+                return None
+        except:
+            return None

@@ -12,6 +12,9 @@ class Mongo():
         self.cryptopunks_offerbook  = self.client.nft_offer_books.cryptopunks
         self.cryptopunks_transactions = self.client.nft_transactions.cryptopunks
 
+    def transaction_present(self, tx_hash: str) -> bool:
+        return self.cryptopunks_transactions.find_one({'hash': tx_hash}) != None
+
     def get_transactions(self, timedelta: timedelta) -> List[Dict]:
         self.logger.info("Getting transactions...")
         return self.cryptopunks_transactions.find({
@@ -29,7 +32,7 @@ class Mongo():
     def insert_offer(self, offer: Dict):
         self.logger.info(f"Inserting offer for {offer['punk_index']}...")
         self.cryptopunks_offerbook.insert_one(offer)
-
+    
     def update_offer(self, offer: Dict):
         self.logger.info(f"Updating offer for {offer['punk_index']}...")
         self.cryptopunks_offerbook.update_one(

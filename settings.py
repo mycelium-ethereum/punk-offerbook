@@ -9,6 +9,9 @@ LOGGER_NAME = 'root'
 # ABI settings
 ABI_PATHS = {'CRYPTOPUNKS': 'abis/CryptoPunksMarket.json'}
 
+# Etherscan settings
+TXS_PER_RESPONSE = 10000
+
 # Ethereum settings
 NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
 AVERAGE_BLOCK_TIME = 15 # in seconds

@@ -17,8 +17,13 @@ def bought_handler(event: dict):
     global cryptopunks
     update_handler(event)
     event = dict(event)
-    tx_information = {'ts': datetime.utcnow(), 'value': str(event['args']['value'])}
-    mongo.cryptopunks_transactions.insert_one(tx_information)
+    tx_data = {
+        'ts': datetime.utcnow(), 
+        'hash': event['transactionHash'].hex(),
+        'value': str(cryptopunks.get_tx_price(event['transactionHash'].hex()))
+    }
+    if not mongo.transaction_present(tx_data['hash']):
+        mongo.cryptopunks_transactions.insert_one(tx_data)
 
 if __name__ == "__main__":
     alert('Starting event watcher now.')
