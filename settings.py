@@ -11,6 +11,7 @@ ABI_PATHS = {'CRYPTOPUNKS': 'abis/CryptoPunksMarket.json'}
 
 # Ethereum settings
 NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
+AVERAGE_BLOCK_TIME = 15 # in seconds
 
 # Cryptopunks
 CRYPTO_PUNKS_RANGE = range(10000)
