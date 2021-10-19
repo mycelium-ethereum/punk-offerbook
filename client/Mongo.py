@@ -3,12 +3,20 @@ import ssl
 import logging
 from typing import List, Dict
 from pymongo import MongoClient
+from datetime import datetime, timedelta
 
 class Mongo():
     def __init__(self):
         self.logger = logging.getLogger('root')
         self.client = MongoClient(os.environ.get("MONGO_URL"), ssl=True, ssl_cert_reqs=ssl.CERT_NONE, readPreference='nearest')
         self.cryptopunks_offerbook  = self.client.nft_offer_books.cryptopunks
+        self.cryptopunks_transactions = self.client.nft_transactions.cryptopunks
+
+    def get_transactions(self, timedelta: timedelta) -> List[Dict]:
+        self.logger.info("Getting transactions...")
+        return self.cryptopunks_transactions.find({
+            'ts': {'$gte': datetime.utcnow() - timedelta}
+        })
 
     def get_all_offers(self) -> List[Dict]:
         self.logger.info("Getting all offers...")

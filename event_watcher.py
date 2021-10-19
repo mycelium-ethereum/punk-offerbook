@@ -13,6 +13,13 @@ def update_handler(event: dict):
         alert(f"Updating offer for PUNK {punk_index}")
         mongo.update_offer(api_offer.db_parse())
 
+def bought_handler(event: dict):
+    global cryptopunks
+    update_handler(event)
+    event = dict(event)
+    tx_information = {'ts': datetime.utcnow(), 'value': str(event['args']['value'])}
+    mongo.cryptopunks_transactions.insert_one(tx_information)
+
 if __name__ == "__main__":
     alert('Starting event watcher now.')
     logger = setup_custom_logger('root')
@@ -20,7 +27,10 @@ if __name__ == "__main__":
 
     cryptopunks = Cryptopunks()
     for event in settings.CRYPTO_PUNKS_EVENTS:
-        cryptopunks.start_streaming(event, event_handler=update_handler)
+        if event == 'PunkBought':
+            cryptopunks.start_streaming(event, event_handler=bought_handler)
+        else:
+            cryptopunks.start_streaming(event, event_handler=update_handler)
 
     while not cryptopunks.errored: time.sleep(1)
 
