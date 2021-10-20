@@ -16,6 +16,7 @@ ADD ./shell-scripts/start_server.sh /start_server.sh
 RUN chmod +x /event_master.sh /refresh_master.sh /start_server.sh 
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log
+RUN python3 store_volume_data.py
 CMD cron && tail -f /var/log/cron.log
 
 # CMD ["uvicorn", "floor_price:app", "--host", "0.0.0.0", "--port", "3400"]

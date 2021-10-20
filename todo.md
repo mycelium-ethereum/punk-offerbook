@@ -1,1 +1,0 @@
-finish dockerfile - store state of volume as well
