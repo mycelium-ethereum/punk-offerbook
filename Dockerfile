@@ -1,6 +1,7 @@
 FROM python:3.7-stretch
 COPY . /app
 WORKDIR /app
+RUN mkdir logs
 EXPOSE 3400
 RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list
 RUN apt update -y
@@ -10,10 +11,8 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 RUN pip3 install -r requirements.txt
 ADD ./shell-scripts/crontab /etc/cron.d/simple-cron
-ADD ./shell-scripts/event_master.sh /event_master.sh
-ADD ./shell-scripts/refresh_master.sh /refresh_master.sh
-ADD ./shell-scripts/start_server.sh /start_server.sh
-RUN chmod +x /event_master.sh /refresh_master.sh /start_server.sh 
+RUN chmod +x ./shell-scripts/script.sh
+RUN chmod +x ./shell-scripts/event_master.sh ./shell-scripts/refresh_master.sh ./shell-scripts/start_server.sh
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log
 RUN python3 store_volume_data.py

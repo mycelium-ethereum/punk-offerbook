@@ -1,3 +1,0 @@
-55 * * * * root /refresh_master.sh
-# * * * * * /usr/bin/flock -n /tmp/punk_offerbook_events.lockfile root /event_master.sh
-# * * * * * /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile root /start_server.sh

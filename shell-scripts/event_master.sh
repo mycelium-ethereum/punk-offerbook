@@ -1,3 +1,4 @@
-echo "$(date): Executing event master" >> /var/log/cron.log 2>&1
+#!/usr/bin/env bash
+
 cd punk-offerbook
 python3 event_watcher.py
