@@ -11,10 +11,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 RUN pip3 install -r requirements.txt
 ADD ./docker-scripts/crontab /etc/cron.d/simple-cron
-RUN chmod +x ./docker-scripts/event_master.sh ./docker-scripts/refresh_master.sh ./docker-scripts/start_server.sh
+RUN chmod +x ./docker-scripts/event_master.sh ./docker-scripts/refresh_master.sh ./docker-scripts/start_server.sh ./docker-scripts/store_volume.sh
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log
-RUN python3 store_volume_data.py
-CMD cron && tail -f /var/log/cron.log
-
-# CMD ["uvicorn", "floor_price:app", "--host", "0.0.0.0", "--port", "3400"]
+CMD cron && ./docker-scripts/refresh_master.sh && ./docker-scripts/store_volume.sh && tail -F /var/log/cron.log
