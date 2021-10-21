@@ -26,7 +26,7 @@ def parse_db_offer(offer: Dict) -> Offer:
     _offer.set_ts(offer['ts'])
     return _offer
 
-def parse_txs(txs: List[Dict]) -> List[Dict]:
+def parse_db_txs(txs: List[Dict]) -> List[Dict]:
     for tx in txs: tx['value'] = int(tx['value'])
     return txs
 
