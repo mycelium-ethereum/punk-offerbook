@@ -10,9 +10,9 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 RUN pip3 install -r requirements.txt
-ADD ./shell-scripts/crontab /etc/cron.d/simple-cron
-RUN chmod +x ./shell-scripts/script.sh
-RUN chmod +x ./shell-scripts/event_master.sh ./shell-scripts/refresh_master.sh ./shell-scripts/start_server.sh
+ADD ./docker-scripts/crontab /etc/cron.d/simple-cron
+RUN chmod +x ./docker-scripts/script.sh
+RUN chmod +x ./docker-scripts/event_master.sh ./docker-scripts/refresh_master.sh ./docker-scripts/start_server.sh
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log
 RUN python3 store_volume_data.py
