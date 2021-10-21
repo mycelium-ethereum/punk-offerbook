@@ -50,6 +50,6 @@ curl -X GET -H "content-type:application/json" "http://<external_ip>:3400/punkfl
 # Docker building and running
 
 ```
-docker build -t ps
+docker build . -t ps
 docker run -d --name ps_container -p 80:80 ps
 ```
