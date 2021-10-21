@@ -11,7 +11,6 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 RUN pip3 install -r requirements.txt
 ADD ./docker-scripts/crontab /etc/cron.d/simple-cron
-RUN chmod +x ./docker-scripts/script.sh
 RUN chmod +x ./docker-scripts/event_master.sh ./docker-scripts/refresh_master.sh ./docker-scripts/start_server.sh
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log

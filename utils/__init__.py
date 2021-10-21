@@ -27,8 +27,12 @@ def parse_db_offer(offer: Dict) -> Offer:
     return _offer
 
 def parse_db_txs(txs: List[Dict]) -> List[Dict]:
-    for tx in txs: tx['value'] = int(tx['value'])
-    return txs
+    _txs = []
+    for tx in txs: 
+        if tx['value'] == 'None': continue
+        tx['value'] = int(tx['value'])
+        _txs.append(tx)
+    return _txs
 
 def parse_db_offers(offers: List[Dict]) -> List[Offer]:
     return [parse_db_offer(offer) for offer in offers]

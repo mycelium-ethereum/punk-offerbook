@@ -2,4 +2,4 @@
 
 echo "$(date): Executing event master" >> /var/log/cron.log 2>&1
 cd ../app
-python3 event_watcher.py
+/usr/local/bin/python3 event_watcher.py

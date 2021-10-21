@@ -2,4 +2,4 @@
 
 echo "$(date): Executing refresh master" >> /var/log/cron.log 2>&1
 cd ../app
-python3 refresh_offers.py
+/usr/local/bin/python3 refresh_offers.py
