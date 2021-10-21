@@ -1,1 +1,0 @@
-cron job started by docker using wrong python version
