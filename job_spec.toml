@@ -1,0 +1,26 @@
+type              = "fluxmonitor"
+schemaVersion     = 1
+name              = "example flux monitor spec"
+contractAddress   = "0x3cCad4715152693fE3BC4460591e3D3Fbd071b42"
+externalJobID     = "0EEC7E1D-D0D2-476C-A1A8-72DFB6633F03"
+
+threshold = 0.5
+absoluteThreshold = 0.0 # optional
+
+idleTimerPeriod   = "1s"
+idleTimerDisabled = false
+
+pollTimerPeriod   = "1m"
+pollTimerDisabled = false
+
+drumbeatEnabled  = true
+drumbeatSchedule = "CRON_TZ=UTC * */20 * * * *"
+
+observationSource = """
+    fetch [type=http method=GET url="http://35.225.49.140:3400/punkfloor"]
+    parse [type=jsonparse path="data" data="$(fetch)"]
+    submit_price [type="bridge" name="price" requestData=<{ "data": { "value": $(parse.price) }}>]
+    submit_volume [type="bridge" name="volume" requestData=<{ "data": { "value": $(parse.volume) }}>]
+    parse -> submit_price
+    parse -> submit_volume
+"""
