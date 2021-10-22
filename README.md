@@ -50,9 +50,9 @@ curl -X GET -H "content-type:application/json" "http://<external_ip>:3400/punkfl
 # Docker building and running
 
 Expose port 80 on your machine for outgoing TCP requests.\
-Create a .env file in the following way (TODO)
+Pass your environment variables after building using the following command. 
 
 ```
 docker build . -t ps
-docker run -d --name ps_container -p 80:80 ps
+docker run -d --name ps_container -e MONGO_URL="" -e ETH_HTTP_URL="" -e ETHERSCAN_KEY="" -p 80:80 ps
 ```
