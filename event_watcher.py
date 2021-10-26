@@ -27,9 +27,11 @@ def bought_handler(event: dict):
         mongo.cryptopunks_transactions.insert_one(tx_data)
 
 if __name__ == "__main__":
-    alert('Starting event watcher now.')
     logger = setup_custom_logger('root')
     setup_file_logger('event', logger)
+
+    alert('Starting event watcher now.')
+    logger.info('Starting event watcher now.')
 
     cryptopunks = Cryptopunks()
     for event in settings.CRYPTO_PUNKS_EVENTS:
@@ -41,4 +43,5 @@ if __name__ == "__main__":
     while not cryptopunks.errored: time.sleep(1)
 
     alert(f"Quitting event watcher because of error - {cryptopunks.error}")
+    logger.error(f"Quitting event watcher because of error - {cryptopunks.error}")
     sys.exit(1)
