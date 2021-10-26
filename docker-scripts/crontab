@@ -1,4 +1,4 @@
-55 * * * * root /app/docker-scripts/refresh_master.sh
+*/15 * * * * root /app/docker-scripts/refresh_master.sh
 * * * * * root /usr/bin/flock -n /tmp/punk_offerbook_events.lockfile /app/docker-scripts/event_master.sh
 * * * * * root /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile /app/docker-scripts/start_server.sh
 # empty line 
