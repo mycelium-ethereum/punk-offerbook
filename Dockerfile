@@ -2,7 +2,7 @@ FROM python:3.7-stretch
 COPY . /app
 WORKDIR /app
 RUN mkdir logs
-EXPOSE 80
+EXPOSE 8080
 RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list
 RUN apt update -y
 RUN apt install -y build-essential curl cron
