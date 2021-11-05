@@ -1,8 +1,9 @@
 # Machine setup
 
-Expose port 80 on your machine for outgoing TCP requests
 
 # Method 1 - Running with Docker
+
+Expose port 8080 on your machine
 
 Pass your environment variables after building using the following command. 
 
@@ -11,12 +12,15 @@ cd
 git clone git@github.com:mycelium-ethereum/punk-offerbook.git
 cd punk-offerbook
 docker build . -t ps
-docker run -d --name ps_container -e MONGO_URL="" -e ETH_HTTP_URL="" -e ETHERSCAN_KEY="" -p 80:80 ps
+docker run -d --name ps_container -e MONGO_URL="" -e ETH_HTTP_URL="" -e ETHERSCAN_KEY="" -p 8080:8080 ps
 ```
 
 --- 
 
 # Method 2
+
+Expose port 3400 on your machine
+
 ## Installation
 
 ```
