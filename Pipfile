@@ -13,6 +13,9 @@ python-dotenv = "*"
 pymongo = {extras = ["srv"], version = "*"}
 discord = "*"
 fastapi = {extras = ["all"], version = "*"}
+beautifulsoup4 = "*"
+selenium = "*"
+webdriver-manager = "*"
 
 [dev-packages]
 

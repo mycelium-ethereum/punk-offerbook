@@ -11,6 +11,7 @@ class Mongo():
         self.client = MongoClient(os.environ.get("MONGO_URL"), ssl=True, ssl_cert_reqs=ssl.CERT_NONE, readPreference='nearest')
         self.cryptopunks_offerbook  = self.client.nft_offer_books.cryptopunks
         self.cryptopunks_transactions = self.client.nft_transactions.cryptopunks
+        self.cryptopunks_price_history = self.client.nft_prices.cryptopunks
 
     def transaction_present(self, tx_hash: str) -> bool:
         return self.cryptopunks_transactions.find_one({'hash': tx_hash}) != None
