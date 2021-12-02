@@ -1,0 +1,11 @@
+.git/
+.ipynb_checkpoints/
+.__pycache__/
+.env
+.gitattributes
+.gitignore
+Pipfile
+Pipfile.lock
+todo.md
+Dockerfile
+.dockerignore

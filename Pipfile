@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+gevent = "*"
+web3 = "*"
+requests = "*"
+ipykernel = "*"
+numpy = "*"
+python-dotenv = "*"
+pymongo = {extras = ["srv"], version = "*"}
+discord = "*"
+fastapi = {extras = ["all"], version = "*"}
+beautifulsoup4 = "*"
+selenium = "*"
+webdriver-manager = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
