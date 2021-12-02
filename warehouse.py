@@ -27,5 +27,4 @@ if __name__ == "__main__":
         'ea_floor': ea_floor,
         'scraper_floor': scraper_floor,
     })
-
     
