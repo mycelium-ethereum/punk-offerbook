@@ -6,6 +6,7 @@ import json
 import settings
 from web3 import Web3
 from client.Mongo import Mongo
+from client.Redis import Redis
 from client.Webhook import webhook
 from client.Opensea import Opensea
 
@@ -19,4 +20,5 @@ def get_raw_abis(abi_paths):
 abis = get_raw_abis(settings.ABI_PATHS)
 web3 = Web3(Web3.HTTPProvider(os.environ.get("ETH_HTTP_URL")))
 mongo = Mongo()
+redis = Redis()
 opensea = Opensea()

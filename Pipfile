@@ -10,12 +10,13 @@ requests = "*"
 ipykernel = "*"
 numpy = "*"
 python-dotenv = "*"
-pymongo = {extras = ["srv"], version = "*"}
 discord = "*"
 fastapi = {extras = ["all"], version = "*"}
 beautifulsoup4 = "*"
 selenium = "*"
 webdriver-manager = "*"
+redis = "*"
+pymongo = {version = "==3.12.0", extras = ["srv"]}
 
 [dev-packages]
 

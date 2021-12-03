@@ -12,6 +12,7 @@ def update_handler(event: dict):
     if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
         alert(f"Updating offer for PUNK {punk_index}")
         mongo.update_offer(api_offer.db_parse())
+    cryptopunks.update_floor(cryptopunks.get_floor())
 
 if __name__ == "__main__":
     logger = setup_custom_logger('root')

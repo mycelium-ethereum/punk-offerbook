@@ -17,4 +17,4 @@ RUN chmod +x ./docker-scripts/start_server.sh
 RUN chmod +x ./docker-scripts/setup.sh
 RUN chmod 0644 /etc/cron.d/simple-cron
 RUN touch /var/log/cron.log
-CMD ./docker-scripts/setup.sh
+CMD bash -C '/app/docker-scripts/setup.sh';'bash'

@@ -74,6 +74,7 @@ python-multipart==0.0.5
 PyYAML==5.4.1
 pyzmq==22.3.0
 requests==2.26.0
+redis==4.0.2
 rlp==2.0.1
 six==1.16.0
 sniffio==1.2.0

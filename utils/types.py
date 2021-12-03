@@ -8,14 +8,14 @@ from dataclasses import dataclass
 from typing import List, Callable, Dict
 from datetime import datetime, timedelta
 from web3._utils.filters import LogFilter
-from client import web3, abis, webhook, mongo
+from client import web3, abis, webhook, mongo, redis
 
 class Streaming:
     def __init__(self):
         self.logger = logging.getLogger(settings.LOGGER_NAME)
         self.errored = False
 
-    def log_loop(self, event_filter: LogFilter, event_handler: Callable, poll_interval: float = 1):
+    def log_loop(self, event_filter: LogFilter, event_handler: Callable, poll_interval: float = 5):
         while True:
             try:
                 for event in event_filter.get_new_entries():
@@ -93,6 +93,16 @@ class Cryptopunks(Streaming):
             abi=abis['CRYPTOPUNKS']
         )
 
+    def update_floor(self, floor_price: int):
+        self.logger.info(f"Updating floor for cryptopunks to {floor_price}")
+        redis.set(settings.REDIS_KEY_NAME, floor_price)
+
+    def get_floor(self) -> int:
+        cryptopunks_offers = parse_db_offers(mongo.get_all_offers())
+        cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
+        cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
+        return cryptopunks_offers[0].min_value
+
     def get_offer(self, punk_index: int) -> Offer:
         try: 
             ts = datetime.utcnow().timestamp()
@@ -116,3 +126,17 @@ class Cryptopunks(Streaming):
                 return None
         except:
             return None
+
+def parse_db_offer(offer: Dict) -> Offer:
+    _offer = Offer(
+        is_for_sale = offer['is_for_sale'],
+        punk_index = offer['punk_index'],
+        seller = offer['seller'],
+        min_value = int(offer['min_value']),
+        only_sell_to = offer['only_sell_to'],
+    )
+    _offer.set_ts(offer['ts'])
+    return _offer
+
+def parse_db_offers(offers: List[Dict]) -> List[Offer]:
+    return [parse_db_offer(offer) for offer in offers]

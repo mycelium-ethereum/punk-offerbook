@@ -9,8 +9,8 @@ LOGGER_NAME = 'root'
 # ABI settings
 ABI_PATHS = {'CRYPTOPUNKS': 'abis/CryptoPunksMarket.json'}
 
-# Etherscan settings
-TXS_PER_RESPONSE = 10000
+# Redis settings
+REDIS_KEY_NAME = 'cryptopunks_floor'
 
 # Ethereum settings
 NULL_ADDRESS = "0x0000000000000000000000000000000000000000"

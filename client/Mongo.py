@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 class Mongo():
     def __init__(self):
         self.logger = logging.getLogger('root')
-        self.client = MongoClient(os.environ.get("MONGO_URL"), ssl=True, ssl_cert_reqs=ssl.CERT_NONE, readPreference='nearest')
+        self.client = MongoClient('mongo')
         self.cryptopunks_offerbook  = self.client.nft_offer_books.cryptopunks
         self.cryptopunks_transactions = self.client.nft_transactions.cryptopunks
         self.cryptopunks_price_history = self.client.nft_prices.cryptopunks

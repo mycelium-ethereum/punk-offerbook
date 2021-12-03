@@ -15,17 +15,6 @@ def get_invalid_ids_string(offers: List[Offer]) -> List[int]:
 def parse_opensea_offers(offers: List[Dict]) -> List[Offer]:
     return offers
 
-def parse_db_offer(offer: Dict) -> Offer:
-    _offer = Offer(
-        is_for_sale = offer['is_for_sale'],
-        punk_index = offer['punk_index'],
-        seller = offer['seller'],
-        min_value = int(offer['min_value']),
-        only_sell_to = offer['only_sell_to'],
-    )
-    _offer.set_ts(offer['ts'])
-    return _offer
-
 def parse_db_txs(txs: List[Dict]) -> List[Dict]:
     _txs = []
     for tx in txs: 
@@ -33,9 +22,6 @@ def parse_db_txs(txs: List[Dict]) -> List[Dict]:
         tx['value'] = int(tx['value'])
         _txs.append(tx)
     return _txs
-
-def parse_db_offers(offers: List[Dict]) -> List[Offer]:
-    return [parse_db_offer(offer) for offer in offers]
 
 def get_offer_for(punk_index: int, offers: List[Offer]) -> Offer:
     try:

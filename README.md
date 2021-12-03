@@ -12,8 +12,7 @@ Pass your environment variables after building using the following command.
 cd
 git clone git@github.com:mycelium-ethereum/punk-offerbook.git
 cd punk-offerbook
-docker build . -t ps --platform linux/x86_64
-docker run -d --name ps_container -e MONGO_URL="" -e ETH_HTTP_URL="" -e ETHERSCAN_KEY="" -p 8080:8080 ps
+docker-compose --env-file <path_to_env_file.env> up
 ```
 
 --- 
