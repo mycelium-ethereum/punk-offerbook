@@ -1,72 +1,54 @@
-# Machine setup
-
-Ensure you are using a cloud deployment of Mongo for this to work.
-
-# Method 1 - Build and Run with Docker
+# Build and Run with Docker
 
 Expose port 8080 on your machine
 
-Pass your environment variables after building using the following command. 
-
 ```
 cd
-git clone git@github.com:mycelium-ethereum/punk-offerbook.git
-cd punk-offerbook
-docker-compose --env-file <path_to_env_file.env> up
+mkdir cryptopunks && cd cryptopunks
+vi docker-compose.yml 
 ```
 
---- 
-
-# Method 2
-
-Expose port 3400 on your machine
-
-## Installation
-
+Paste this
 ```
-cd
-git clone git@github.com:mycelium-ethereum/punk-offerbook.git
-cd punk-offerbook
-pip3 install -r requirements.txt
-```
+version: "3.9"
+services:
+  adapter:
+    image: gcr.io/tracer-external-adapters/cryptopunks
+    ports:
+      - "8080:8080"
+    environment:
+      - ETH_HTTP_URL=${ETH_HTTP_URL}
+    restart: always 
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo_data:/data
 
-## Setup environment
-
-Create a .env file with the following variables\
-The DISCORD_WEBHOOK env variable is optional. Set to an empty string if you don't want to see server logs on discord.
-```
-ETH_HTTP_URL = "XXX"
-MONGO_URL = "XXX"
-DISCORD_WEBHOOK = "XXX"
-```
-
-## Install cron
-
-Replace < username > with your server username.
-```
-55 * * * * /home/<username>/punk-offerbook/shell-scripts/refresh_master.sh
-* * * * * /usr/bin/flock -n /tmp/punk_offerbook_events.lockfile /home/<username>/punk-offerbook/shell-scripts/event_master.sh
-* * * * * /usr/bin/flock -n /tmp/punk_offerbook_server.lockfile /home/<username>/punk-offerbook/shell-scripts/start_server.sh
-*/15 * * * * /usr/bin/flock -n /tmp/punk_offerbook_warehouse.lockfile /home/<username>/punk-offerbook/shell-scripts/warehouse_master.sh
+volumes:
+  mongo_data:
+  redis_data:
 ```
 
-## Data preparation
+Type ```:x``` to save and exit
+
 ```
-cd
-./punk-offerbook/shell-scripts/event_master.sh &
-./punk-offerbook/shell-scripts/refresh_master.sh
+vi .env
 ```
 
-## Starting the server
-By default the server will serve data through port 3400. This can be modified in the start_server.sh file.\
-To run the server on port 3400, execute the following command:-
+And paste your ETH_HTTP_URL within the quotations
 ```
-uvicorn floor_price:app --host 0.0.0.0 --port 3400
+ETH_HTTP_URL=""
 ```
 
-## Usage
+Type ```:x``` to save and exit
 
-Replace < external_ip > with your External IP address.
+Run with
 ```
-curl -X GET -H "content-type:application/json" "http://<external_ip>:3400/punkfloor"
+docker-compose up
 ```

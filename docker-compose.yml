@@ -1,13 +1,15 @@
 version: "3.9"
 services:
-  web:
+  adapter:
     build: .
+    image: gcr.io/tracer-external-adapters/cryptopunks
+    platform: linux/amd64
     ports:
       - "8080:8080"
     environment:
       - ETH_HTTP_URL=${ETH_HTTP_URL}
-      - MONGO_URL=${MONGO_URL}
       - DISCORD_WEBHOOK=${DISCORD_WEBHOOK}
+    restart: always
   redis:
     image: redis:alpine
     restart: always
