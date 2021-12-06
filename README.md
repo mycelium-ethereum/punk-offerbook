@@ -52,3 +52,9 @@ Run with
 ```
 docker-compose up
 ```
+
+## If you have bugs:
+
+```
+export LD_LIBRARY_PATH=/usr/local/lib
+```
