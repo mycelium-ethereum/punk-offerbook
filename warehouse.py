@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 from scraper import CryptopunksScraper
-from utils import alert, mongo, setup_file_logger, setup_custom_logger
+from utils import mongo, setup_file_logger, setup_custom_logger
 
 if __name__ == "__main__":
 

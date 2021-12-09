@@ -1,3 +1,4 @@
+import os
 import sys
 import settings
 from utils import *
@@ -10,7 +11,6 @@ def update_handler(event: dict):
     db_offer = parse_db_offer(mongo.get_offer(punk_index))
     api_offer = cryptopunks.get_offer(punk_index)
     if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
-        alert(f"Updating offer for PUNK {punk_index}")
         mongo.update_offer(api_offer.db_parse())
     cryptopunks.update_floor(cryptopunks.get_floor())
 
@@ -18,7 +18,6 @@ if __name__ == "__main__":
     logger = setup_custom_logger('root')
     setup_file_logger('event', logger)
 
-    alert('Starting event watcher now.')
     logger.info('Starting event watcher now.')
 
     cryptopunks = Cryptopunks()
@@ -27,6 +26,6 @@ if __name__ == "__main__":
 
     while not cryptopunks.errored: time.sleep(1)
 
-    alert(f"Quitting event watcher because of error - {cryptopunks.error}")
+    alert(f"{os.getenv('NAME')} Quitting event watcher because of error - {cryptopunks.error}")
     logger.error(f"Quitting event watcher because of error - {cryptopunks.error}")
     sys.exit(1)

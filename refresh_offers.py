@@ -26,7 +26,6 @@ def update_offers():
             latest_offers.append(api_offer)
         else:
             if api_offer.ts > db_offer.ts and not api_offer.equals(db_offer):
-                alert(f"Updating offer for PUNK {punk_id} from rest program")
                 mongo.update_offer(api_offer.db_parse())
                 latest_offers.append(api_offer)
             else:
@@ -42,10 +41,8 @@ if __name__ == "__main__":
 
     start_time = time.time()
 
-    alert('Starting refresh offers now.')
     logger.info("Starting refresh offers now.")
 
     cryptopunks = Cryptopunks()
     update_offers()
     logger.info(f"Refresh offers completed in {int(time.time() - start_time)}s")
-    alert(f"Refresh offers completed in {int(time.time() - start_time)}s")
