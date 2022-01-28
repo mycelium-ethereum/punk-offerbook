@@ -74,7 +74,7 @@ class Offer:
         return self.only_sell_to == settings.NULL_ADDRESS
 
     def is_valid_offer(self) -> bool:
-        return self.is_for_sale and self.is_not_private_sale()
+        return self.is_for_sale and self.is_not_private_sale() and (datetime.utcnow().timestamp() - self.ts)/86400 > 1
 
     def equals(self, offer: Offer):
         return (
