@@ -3,6 +3,7 @@ import sys
 import time
 import logging
 import settings
+import numpy as np
 from threading import Thread
 from dataclasses import dataclass
 from typing import List, Callable, Dict
@@ -102,6 +103,12 @@ class Cryptopunks(Streaming):
         cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
         cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
         return cryptopunks_offers[0].min_value
+
+    def get_median_of(self, n: int) -> int:
+        cryptopunks_offers = parse_db_offers(mongo.get_all_offers())
+        cryptopunks_offers = [offer for offer in cryptopunks_offers if offer.is_valid]
+        cryptopunks_offers.sort(key=lambda x: x.min_value, reverse=False)
+        return np.median([offer.min_value for offer in cryptopunks_offers[:n]])
 
     def get_offer(self, punk_index: int) -> Offer:
         try: 

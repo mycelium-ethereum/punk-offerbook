@@ -6,6 +6,7 @@ from gevent import monkey
 monkey.patch_all();
 
 import settings
+import numpy as np
 from utils import *
 
 def get_web3_offers() -> List[Offer]:
@@ -32,7 +33,8 @@ def update_offers():
                 latest_offers.append(db_offer)
     latest_offers = [offer for offer in latest_offers if offer.is_valid]
     latest_offers.sort(key=lambda x: x.min_value, reverse=False)
-    cryptopunks.update_floor(latest_offers[0].min_value)
+    median_value = np.median([offer.min_value for offer in latest_offers[:settings.PUNKS_TO_MEDIAN]])
+    cryptopunks.update_floor(median_value)
 
 if __name__ == "__main__":
 
